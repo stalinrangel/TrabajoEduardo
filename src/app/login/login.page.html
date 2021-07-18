@@ -6,20 +6,20 @@
 		<form [formGroup]="loginUserForm" class="padding-space">
 			<ion-list>
 			<ion-item lines="none" class="item-input">
-				<ion-label position="stacked">Correo electrónico</ion-label>
-				<ion-input type="email" formControlName="email" placeholder="Ingresa tu correo"></ion-input>
+				<ion-label class="label-login" position="stacked">Correo electrónico</ion-label>
+				<ion-input class="input-login" type="email" formControlName="email" placeholder="Ingresa tu correo"></ion-input>
 			</ion-item>
 			<ion-item lines="none" class="item-input">
-				<ion-label position="stacked">Contraseña</ion-label>
-				<ion-input type="password" formControlName="password" placeholder="Contraseña" (keyup.enter)="login()"></ion-input>
+				<ion-label class="label-login" position="stacked">Contraseña</ion-label>
+				<ion-input class="input-login" type="password" formControlName="password" placeholder="Contraseña" (keyup.enter)="login()"></ion-input>
 			</ion-item>
-            
+
 			<div class="content-btnlogin">
 				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
-				<ion-button class="ion-text-uppercase btn-init" (click)="login()">Ingresar</ion-button>
+				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="login()">Ingresar</ion-button>
 			</div>
 			</ion-list>
 		</form>
 	</div>
-	<ion-button class="ion-text-uppercase btn-init2" (click)="register()">REGISTRAR</ion-button>
+	<ion-button class="ion-text-uppercase btn-init2 btn-global" (click)="register()">REGISTRAR</ion-button>
 </ion-content>

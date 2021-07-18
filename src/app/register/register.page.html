@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+
+   <ion-buttons class="icon-back" (click)="goBack()">
+    <ion-button>
+      <ion-icon name="chevron-back-outline" style="color: white;"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+    <ion-title>REGRISTRO</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding>
+
+	<div class="content-form">
+		<form [formGroup]="loginUserForm" class="padding-space">
+			<ion-list>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Ingresa tu correo electrónico</ion-label>
+				<ion-input class="input-login" type="email" formControlName="email" placeholder="Ingresa tu correo"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Ingresa tu contraseña</ion-label>
+				<ion-input class="input-login" type="password" formControlName="password" placeholder="Contraseña" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+      <ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Ingresa de nuevo tu contraseña</ion-label>
+				<ion-input class="input-login" type="password" formControlName="rpassword" placeholder="Contraseña" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+
+			<div class="content-btnlogin">
+				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
+				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="register()">Registrar</ion-button>
+			</div>
+			</ion-list>
+		</form>
+	</div>
+
+</ion-content>

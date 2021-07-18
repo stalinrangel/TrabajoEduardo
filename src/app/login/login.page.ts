@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
+import { RefreshService } from '../../services/refresh/refresh.service';
+import { StorageService } from '../../services/storage/storage.service';
+
 
 @Component({
   selector: 'app-login',
@@ -27,7 +31,11 @@ export class LoginPage implements OnInit {
     passw: ''
   };
 
-  constructor(private builder: FormBuilder, public nav: NavController, ) { }
+  constructor(private builder: FormBuilder,
+     public nav: NavController,
+     private toastController: ToastController,
+     private auth: AuthService
+     ) { }
 
 
   ngOnInit() {
@@ -43,31 +51,40 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    /*if (this.loginUserForm.valid) {
-      this.presentLoading();
-      this.oneSignal.getIds().then((ids) => {
-        if (ids.userId != null && ids.userId != '') {
-          this.storage.set('token_notificacionMSGRAFF',ids.userId);
-          this.loginUserForm.patchValue({token_notificacion: ids.userId});
+    if (this.loginUserForm.valid) {
+      //this.presentLoading();
+      //this.oneSignal.getIds().then((ids) => {
+        //if (ids.userId != null && ids.userId != '') {
+          //this.storage.set('token_notificacionMSGRAFF',ids.userId);
+          //this.loginUserForm.patchValue({token_notificacion: ids.userId});
           this.auth.login(this.loginUserForm.value).subscribe(allowed => {
             if (allowed == 1) {
-              this.loading.dismiss();*/
-              this.nav.navigateForward('folder/Inbox');/*
+              this.loading.dismiss();
+              this.nav.navigateForward('folder/Inbox');
             } else {
-              this.refresh.publishFormRefresh(2);
+              //this.refresh.publishFormRefresh(2);
               this.loading.dismiss();
               this.nav.pop();
             }
           },
           error => {
             this.loading.dismiss();
-            this.presentToast(error.error);
+            //this.presentToast(error.error);
           });
-        };
-      });
+        //};
+      //});
     } else {
       this.presentToast("Por favor, verifica los datos.");
-    }*/
+    }
   }
-
+  async presentToast(text) {
+    const toast = await this.toastController.create({
+      message: text,
+      duration: 2000
+    });
+    toast.present();
+  }
+  register(){
+    this.nav.navigateForward('register');
+  }
 }
