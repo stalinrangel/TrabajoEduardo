@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="background-color: black; color: white;">
   <ion-toolbar>
 
    <ion-buttons class="icon-back" (click)="goBack()">
@@ -14,7 +14,7 @@
 
 	<div class="content-form">
 		<form [formGroup]="loginUserForm" class="padding-space">
-			<ion-list>
+			<ion-list style="background-color: transparent;">
 			<ion-item lines="none" class="item-input">
 				<ion-label class="label-login" position="stacked">Ingresa tu correo electrónico</ion-label>
 				<ion-input class="input-login" type="email" formControlName="email" placeholder="Ingresa tu correo"></ion-input>

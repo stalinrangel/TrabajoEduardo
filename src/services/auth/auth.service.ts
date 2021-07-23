@@ -121,6 +121,46 @@ export class AuthService {
       });
     }
   }
+  public curriculum(credentials) {
+    if (credentials.email === null) {
+      return Observable.throw("Please insert credentials");
+    } else {
+      return Observable.create(observer => {
+        this.http.post(`${environment.api}api/candidates`, credentials)
+        .toPromise()
+        .then(
+        data => {
+          console.log(data);
+          //this.msgNewRegister(credentials.email, credentials.nombre);
+          //this.msgNewRegister('massage.graf.app@gmail.com', credentials.nombre);
+          //this.usuario = data;
+          //this.storage.setObject('MASSGGRAPROV1',credentials);
+          //this.storage.set('TKMASSGGRA',this.usuario.token);
+          //this.storage.setObject('USMASSGGRA', this.usuario.usuario);
+          //observer.next(true);
+          //observer.complete();
+        },
+        msg => {
+          observer.error(msg.error);
+          observer.complete();
+        });
+      });
+    }
+  }
+  public labor_categories(credentials) {
+    return Observable.create(observer => {
+      this.http.get(`${environment.api}api/labor-categories`)
+      .toPromise()
+      .then(
+      data => {
+        console.log(data);
+      },
+      msg => {
+        observer.error(msg.error);
+        observer.complete();
+      });
+    });
+  }
 
   public register(credentials) {
     if (credentials.nombre === null || credentials.email === null  || credentials.telefono === null || credentials.password === null || credentials.rpassword === null) {

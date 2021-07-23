@@ -3,7 +3,7 @@ import { NavController, Platform, LoadingController, AlertController, ToastContr
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { RefreshService } from '../../services/refresh/refresh.service';
-import { StorageService } from '../../services/storage/storage.service';
+import { Storage } from '@ionic/storage-angular';
 
 
 @Component({
@@ -34,7 +34,8 @@ export class LoginPage implements OnInit {
   constructor(private builder: FormBuilder,
      public nav: NavController,
      private toastController: ToastController,
-     private auth: AuthService
+     private auth: AuthService,
+     private storage: Storage
      ) { }
 
 
@@ -60,7 +61,9 @@ export class LoginPage implements OnInit {
           this.auth.login(this.loginUserForm.value).subscribe(allowed => {
             if (allowed == 1) {
               this.loading.dismiss();
-              this.nav.navigateForward('folder/Inbox');
+              this.storage.set('email_trabajo',this.loginUserForm.value.email);
+              //this.storage.set('nombre_trabajo',ids.userId);
+              this.nav.navigateForward('principal');
             } else {
               //this.refresh.publishFormRefresh(2);
               this.loading.dismiss();

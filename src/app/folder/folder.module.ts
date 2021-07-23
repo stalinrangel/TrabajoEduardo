@@ -19,9 +19,9 @@ import { FolderPage } from './folder.page';
 })
 export class FolderPageModule {
   constructor(private menu: MenuController) { 
-    this.menu.enable(true, 'custom');
-    this.menu.close('custom');
-    console.log('d');
+    //this.menu.enable(true, 'custom');
+    //this.menu.close('custom');
+    //console.log('d');
   }
 
 }

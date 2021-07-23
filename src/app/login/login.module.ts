@@ -23,7 +23,7 @@ export class LoginPageModule {
 
 
   constructor(private menu: MenuController) { 
-    this.menu.enable(false, 'custom');
+    //this.menu.enable(false, 'custom');
   }
 
 

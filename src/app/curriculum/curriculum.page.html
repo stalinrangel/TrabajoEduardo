@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Curriculum</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content-form">
+	  <h4 style="color: white;">Ingresa los datos de tu Curriculum Vitae(CV)</h4><br>
+	  
+		<form [formGroup]="loginUserForm" class="padding-space">
+			<ion-list style="background-color: transparent;">
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Ingresa tu primer nombre</ion-label>
+				<ion-input class="input-login" type="text" formControlName="first_name" placeholder="Primer nombre"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Segundo nombre</ion-label>
+				<ion-input class="input-login" type="text" formControlName="second_name" placeholder="Segundo nombre" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+      		<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Primer apellido</ion-label>
+				<ion-input class="input-login" type="text" formControlName="first_lastname" placeholder="Primer apellido" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+      		<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Segundo apellido</ion-label>
+				<ion-input class="input-login" type="text" formControlName="second_lastname" placeholder="Segundo apellido" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login">Fecha de nacimiento</ion-label>
+				<ion-datetime style="color: white;" displayFormat="MM/DD/YYYY" min="1900-01-10" formControlName="born"></ion-datetime>
+			</ion-item>
+      		<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Documento de identidad</ion-label>
+				<ion-input class="input-login" type="text" formControlName="document_number" placeholder="" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+      		<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Número de teléfono</ion-label>
+				<ion-input class="input-login" type="text" formControlName="document_number" placeholder="" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Años de experiencia</ion-label>
+				<ion-select style="color: white;" value="white" okText="Ok" cancelText="Cancelar" formControlName="experience_years">
+					<ion-select-option value="1">1</ion-select-option>
+					<ion-select-option value="2">2</ion-select-option>
+					<ion-select-option value="3">3</ion-select-option>
+					<ion-select-option value="4">4</ion-select-option>
+					<ion-select-option value="5">5</ion-select-option>
+					<ion-select-option value="6">6</ion-select-option>
+					<ion-select-option value="7">7</ion-select-option>
+					<ion-select-option value="8">8</ion-select-option>
+					<ion-select-option value="9">9</ion-select-option>
+					<ion-select-option value="10">10</ion-select-option>
+					<ion-select-option value="11">11</ion-select-option>
+					<ion-select-option value="12">12</ion-select-option>
+					<ion-select-option value="13">13</ion-select-option>
+					<ion-select-option value="14">14</ion-select-option>
+					<ion-select-option value="15">15</ion-select-option>
+					<ion-select-option value="16">16</ion-select-option>
+					<ion-select-option value="17">17</ion-select-option>
+					<ion-select-option value="18">18</ion-select-option>
+					<ion-select-option value="19">19</ion-select-option>
+					<ion-select-option value="20">20</ion-select-option>
+					<ion-select-option value="21">21</ion-select-option>
+					<ion-select-option value="22">22</ion-select-option>
+					<ion-select-option value="23">23</ion-select-option>
+					<ion-select-option value="24">24</ion-select-option>
+					<ion-select-option value="25">25</ion-select-option>
+				  </ion-select>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">En este momento posee trabajo</ion-label>
+				<ion-checkbox color="dark" formControlName="working"></ion-checkbox>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Tiene alojamiento</ion-label>
+				<ion-checkbox color="dark" formControlName="has_lodging"></ion-checkbox>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Posee transporte</ion-label>
+				<ion-checkbox color="dark" formControlName="has_transport"></ion-checkbox>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Dispone de herramientos</ion-label>
+				<ion-checkbox color="dark" formControlName="has_tools"></ion-checkbox>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Email</ion-label>
+				<ion-input class="input-login" type="text" formControlName="user" placeholder="" (keyup.enter)="login()"></ion-input>
+			</ion-item>
+			
+			</ion-list>
+		</form>
+			<ion-list style="background-color: transparent;">
+			<ion-item lines="none" class="item-input">
+			<ion-label class="label-login" position="stacked">Selecciona el area de trabajo</ion-label>
+			<ion-select style="color: white;" value="white" [(ngModel)]="items" multiple okText="OK" cancelText="Cancelar" (ngModelChange)="onChange($event)">
+				<ion-select-option (click)="onChange(item.id)" *ngFor="let labor_cat of labor_cat" value="{{labor_cat.id}}">
+					{{ labor_cat.description }}
+				</ion-select-option>
+			</ion-select>
+			</ion-item>
+			<div class="content-btnlogin">
+				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
+				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="curriculo()">Guardar</ion-button>
+			</div>
+			</ion-list>
+	</div>
+</ion-content>
