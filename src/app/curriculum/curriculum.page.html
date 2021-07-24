@@ -106,16 +106,42 @@
 			<ion-item lines="none" class="item-input">
 				<ion-label class="label-login" position="stacked">Agregue sus referencias personales</ion-label>
 				<ion-grid>
-					<ion-row *ngFor="let p_r of p">
+					<ion-row *ngFor="let p_r of p_r">
 					  <ion-col>
-						<ion-input class="input-login" type="text" [(ngModel)]="p.person" placeholder="Nombre" ></ion-input>
+						<ion-input class="input-login" type="text" [(ngModel)]="p_r.person" placeholder="Nombre" ></ion-input>
 					  </ion-col>
 					  <ion-col>
-						<ion-input class="input-login" type="text" [(ngModel)]="p.phone" placeholder="Teléfono" ></ion-input>
+						<ion-input class="input-login" type="text" [(ngModel)]="p_r.phone" placeholder="Teléfono" ></ion-input>
 					  </ion-col>
+					  <ion-col *ngIf="p_r.activo">
+						<ion-button class="ion-text-uppercase btn-init btn-global" (click)="add_p_r(p_r.person,p_r.phone)">+</ion-button>
+					  </ion-col>	
 					</ion-row>
-					<ion-row>
-					  	<ion-col></ion-col><ion-col></ion-col><ion-col><ion-button class="ion-text-uppercase btn-init btn-global" (click)="add_p_r(person,phone)">Agregar</ion-button></ion-col>
+				</ion-grid>
+			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Agregue sus referencias laborales</ion-label>
+				<ion-grid>
+					<ion-row *ngFor="let j_r of j_r">
+						<ion-row>
+							<ion-col>
+								<ion-input class="input-login" type="text" [(ngModel)]="j_r.place" placeholder="Lugar de trabajo" ></ion-input>
+							</ion-col>
+							<ion-col>
+								<ion-input class="input-login" type="text" [(ngModel)]="j_r.job_position" placeholder="Cargo" ></ion-input>
+							</ion-col>
+						</ion-row>
+						<ion-row>
+							<ion-col>
+								<ion-input class="input-login" type="text" [(ngModel)]="j_r.person" placeholder="Nombre de contacto" ></ion-input>
+							</ion-col>
+							<ion-col>
+								<ion-input class="input-login" type="text" [(ngModel)]="j_r.phone" placeholder="Teléfono de contacto" ></ion-input>
+							</ion-col>
+							<ion-col *ngIf="j_r.activo">
+								<ion-button class="ion-text-uppercase btn-init btn-global" (click)="add_j_r()">+</ion-button>
+							</ion-col>
+						</ion-row>	
 					</ion-row>
 				</ion-grid>
 			</ion-item>

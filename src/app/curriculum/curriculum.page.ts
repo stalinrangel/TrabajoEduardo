@@ -6,6 +6,7 @@ import { RefreshService } from '../../services/refresh/refresh.service';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-curriculum',
@@ -21,8 +22,22 @@ export class CurriculumPage implements OnInit {
   public response;
   public loading;
   public labor_cat;
-  public p_r=[];
-  public j_r=[];
+  public p_r=[
+    {
+    "person": "",
+    "phone": "",
+    "activo":1
+    }
+  ];
+  public j_r=[
+    {
+    "place": "",
+    "job_position": "",
+    "person": "",
+    "phone": "",
+    "activo": 1
+    }
+  ];
 
   constructor(public http: HttpClient,
     private builder: FormBuilder,
@@ -122,6 +137,10 @@ export class CurriculumPage implements OnInit {
   }
   curriculo(){
      console.log(this.loginUserForm);
+     
+     this.loginUserForm.patchValue({personal_references: this.p_r});
+     this.loginUserForm.patchValue({job_references: this.j_r});
+
     if (this.loginUserForm.valid) {
 
           if (false) {
@@ -130,11 +149,13 @@ export class CurriculumPage implements OnInit {
             this.auth.curriculum(this.loginUserForm.value).subscribe(allowed => {
               if (allowed == 1) {
                 this.loading.dismiss();
+                return Observable.throw("Se ha guardado con éxito");
                 //this.nav.navigateForward('folder/Inbox');
               } else {
                 //this.refresh.publishFormRefresh(2);
                 this.loading.dismiss();
-                this.nav.pop();
+                return Observable.throw("Error al guardar.");
+                //this.nav.pop();
               }
             },
             error => {
@@ -148,21 +169,34 @@ export class CurriculumPage implements OnInit {
       this.presentToast("Por favor, verifica los datos.");
     }
   }
-  
+
   person;
   phone;
 
   add_p_r(person,phone){
-    /*"person": "Pepe",
-      "phone": "123123123"*/
+
     console.log(person);
     console.log(phone);
+    this.p_r[(this.p_r.length-1)].activo=0;
+    this.p_r.push(
+      {
+        "person": "",
+        "phone": "",
+        "activo":1
+        }
+    );
   }
   add_j_r(){
-    /*"place": "UPM",
-    "job_position": "soladador",
-    "person": "Pepe",
-    "phone": "123123123"*/
+    this.j_r[(this.j_r.length-1)].activo=0;
+    this.j_r.push(
+      {
+        "place": "",
+        "job_position": "",
+        "person": "",
+        "phone": "",
+        "activo": 1
+      }
+    );
   }
 }
 
