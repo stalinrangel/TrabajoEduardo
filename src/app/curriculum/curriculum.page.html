@@ -103,6 +103,22 @@
 				</ion-select-option>
 			</ion-select>
 			</ion-item>
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Agregue sus referencias personales</ion-label>
+				<ion-grid>
+					<ion-row *ngFor="let p_r of p">
+					  <ion-col>
+						<ion-input class="input-login" type="text" [(ngModel)]="p.person" placeholder="Nombre" ></ion-input>
+					  </ion-col>
+					  <ion-col>
+						<ion-input class="input-login" type="text" [(ngModel)]="p.phone" placeholder="Teléfono" ></ion-input>
+					  </ion-col>
+					</ion-row>
+					<ion-row>
+					  	<ion-col></ion-col><ion-col></ion-col><ion-col><ion-button class="ion-text-uppercase btn-init btn-global" (click)="add_p_r(person,phone)">Agregar</ion-button></ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
 			<div class="content-btnlogin">
 				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
 				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="curriculo()">Guardar</ion-button>

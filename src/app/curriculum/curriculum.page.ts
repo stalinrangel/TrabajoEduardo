@@ -21,6 +21,8 @@ export class CurriculumPage implements OnInit {
   public response;
   public loading;
   public labor_cat;
+  public p_r=[];
+  public j_r=[];
 
   constructor(public http: HttpClient,
     private builder: FormBuilder,
@@ -96,6 +98,8 @@ export class CurriculumPage implements OnInit {
     residence: [1, [Validators.required]],
    // selec_categ: ['', [Validators.required]],
     categories: [[{"category": 1, "grade":15}], [Validators.required]],
+    job_references: [[], [Validators.required]],
+    personal_references: [[], [Validators.required]],
    });
   }
 
@@ -116,7 +120,7 @@ export class CurriculumPage implements OnInit {
   agregar_categ(){
     console.log(this.loginUserForm.value.selec_categ);
   }
-   curriculo(){
+  curriculo(){
      console.log(this.loginUserForm);
     if (this.loginUserForm.valid) {
 
@@ -144,6 +148,21 @@ export class CurriculumPage implements OnInit {
       this.presentToast("Por favor, verifica los datos.");
     }
   }
+  
+  person;
+  phone;
 
+  add_p_r(person,phone){
+    /*"person": "Pepe",
+      "phone": "123123123"*/
+    console.log(person);
+    console.log(phone);
+  }
+  add_j_r(){
+    /*"place": "UPM",
+    "job_position": "soladador",
+    "person": "Pepe",
+    "phone": "123123123"*/
+  }
 }
 
