@@ -1,7 +1,7 @@
 {
-	"appId": "com.trabajoEduardo.app",
+	"appId": "com.trabajoeduardo.com",
 	"appName": "trabajo",
-	"webDir": "www",
+	"webDir": "src",
 	"bundledWebRuntime": false,
 	"cordova": {
 		"preferences": {
