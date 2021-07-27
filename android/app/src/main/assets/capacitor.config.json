@@ -1,7 +1,7 @@
 {
-	"appId": "com.trabajoeduardo.com",
+	"appId": "io.ionic.starter",
 	"appName": "trabajo",
-	"webDir": "src",
+	"webDir": "www",
 	"bundledWebRuntime": false,
 	"cordova": {
 		"preferences": {

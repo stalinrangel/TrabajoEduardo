@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NavController, Platform, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { StorageService } from '../../services/storage/storage.service';
@@ -11,7 +12,7 @@ export class AuthService {
 
   usuario: any;
 
-  constructor(public http: HttpClient, public storage: StorageService) {}
+  constructor(public http: HttpClient, public storage: StorageService, public nav: NavController) {}
 
  public login(credentials) {
     if (credentials.email === null || credentials.password === null) {
@@ -24,6 +25,7 @@ export class AuthService {
           data => {
             this.usuario = data;
             console.log(data);
+            this.nav.navigateForward('curriculum');
             /*this.storage.setObject('MASSGGRAPROV1',credentials);
             if(this.usuario.user.tipo_usuario == 3 || this.usuario.user.tipo_usuario == 4){
               this.storage.set('TKMASSGGRAPROV',this.usuario.token);

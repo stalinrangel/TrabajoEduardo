@@ -16,8 +16,34 @@ ion-content{
 	    position: relative;
 	    z-index: 99;
 	    min-height: 100px;
+      border-radius: 90px;
 	}
 }
+.content-profile{
+	text-align: center;
+}
+.content-icon{
+	margin: 15px 0px 20px;
+    position: relative;
+	img{
+		height: 80px;
+	    width: 80px;
+	    border-radius: 50em;
+	    object-fit: cover;
+    	object-position: top;
+      border-radius: 90px;
+	}
+	ion-icon{
+		font-size: 25px;
+	    position: absolute;
+	    bottom: 0px;
+	    margin-left: -25px;
+	    color: #66dbe4;
+	    background-color: #ffffff;
+	    border-radius: 50em;
+	}
+}
+
 .content-form{
 	border-radius: 8px;
 	margin-top: 5vh;

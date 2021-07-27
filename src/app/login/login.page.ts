@@ -63,11 +63,13 @@ export class LoginPage implements OnInit {
               this.loading.dismiss();
               this.storage.set('email_trabajo',this.loginUserForm.value.email);
               //this.storage.set('nombre_trabajo',ids.userId);
-              this.nav.navigateForward('principal');
+              console.log('login');
+              this.nav.navigateForward('curriculum');
             } else {
               //this.refresh.publishFormRefresh(2);
+              console.log('login2');
               this.loading.dismiss();
-              this.nav.pop();
+              //this.nav.pop();
             }
           },
           error => {

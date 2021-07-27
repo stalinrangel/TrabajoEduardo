@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.trabajoeduardo.com',
+  appId: 'io.ionic.starter',
   appName: 'trabajo',
-  webDir: 'src',
+  webDir: 'www',
   bundledWebRuntime: false,
   cordova: {
     preferences: {

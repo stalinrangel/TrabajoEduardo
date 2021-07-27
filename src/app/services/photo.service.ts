@@ -8,7 +8,10 @@ import { Storage } from '@capacitor/storage';
 })
 export class PhotoService {
   public photos: Photos[] = [];
+  public url_photo=null;
+
   constructor() { }
+
 
   public async addNewToGallery() {
     // Take a photo
@@ -17,11 +20,13 @@ export class PhotoService {
       source: CameraSource.Camera,
       quality: 100
     });
-  
+
     this.photos.unshift({
       filepath: "",
       webviewPath: capturedPhoto.webPath
     });
+    console.log(capturedPhoto.webPath);
+    this.url_photo=capturedPhoto.webPath;
   }
 
   public url(){

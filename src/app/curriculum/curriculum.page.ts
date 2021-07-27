@@ -7,6 +7,7 @@ import { Storage } from '@ionic/storage-angular';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-curriculum',
@@ -44,9 +45,10 @@ export class CurriculumPage implements OnInit {
     public nav: NavController,
     private toastController: ToastController,
     private auth: AuthService,
-    private storage: Storage
-    ) { 
-      
+    private storage: Storage,
+    public photoService: PhotoService
+    ) {
+
     }
 
 
@@ -54,6 +56,17 @@ export class CurriculumPage implements OnInit {
    this.initForm();
    this.labor_categories();
  }
+
+ addPhotoToGallery() {
+    this.photoService.addNewToGallery();
+    this.get_url();
+  }
+  image_user;
+
+  get_url(){
+    console.log(this.photoService.photos[0]);
+    this.image_user=this.photoService.photos[this.photoService.photos.length];
+  }
 
   items;
 
@@ -137,7 +150,7 @@ export class CurriculumPage implements OnInit {
   }
   curriculo(){
      console.log(this.loginUserForm);
-     
+
      this.loginUserForm.patchValue({personal_references: this.p_r});
      this.loginUserForm.patchValue({job_references: this.j_r});
 
