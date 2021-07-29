@@ -9,6 +9,7 @@ import { Storage } from '@capacitor/storage';
 export class PhotoService {
   public photos: Photos[] = [];
   public url_photo=null;
+  public url_photo_complete=null;
 
   constructor() { }
 
@@ -21,12 +22,10 @@ export class PhotoService {
       quality: 100
     });
 
-    this.photos.unshift({
-      filepath: "",
-      webviewPath: capturedPhoto.webPath
-    });
-    console.log(capturedPhoto.webPath);
-    this.url_photo=capturedPhoto.webPath;
+
+    console.log(capturedPhoto);
+    this.url_photo=capturedPhoto.webPath/*+'.'+capturedPhoto.format*/;
+    this.url_photo_complete=capturedPhoto.webPath+'.'+capturedPhoto.format;
   }
 
   public url(){

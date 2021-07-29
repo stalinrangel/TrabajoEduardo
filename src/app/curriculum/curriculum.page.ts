@@ -5,18 +5,22 @@ import { AuthService } from '../../services/auth/auth.service';
 import { RefreshService } from '../../services/refresh/refresh.service';
 import { Storage } from '@ionic/storage-angular';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PhotoService } from '../services/photo.service';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 @Component({
   selector: 'app-curriculum',
   templateUrl: './curriculum.page.html',
   styleUrls: ['./curriculum.page.scss'],
 })
+
 export class CurriculumPage implements OnInit {
 
   public loginUserForm: FormGroup;
+  public imageForm: FormGroup;
   private apiResponse;
   public subscription: any;
   public datos;
@@ -40,13 +44,22 @@ export class CurriculumPage implements OnInit {
     }
   ];
 
+  public acreditaciones=[
+    {
+      "nombre": "",
+      "file": "",
+      "activo":1
+      }
+  ];
+
   constructor(public http: HttpClient,
     private builder: FormBuilder,
     public nav: NavController,
     private toastController: ToastController,
     private auth: AuthService,
     private storage: Storage,
-    public photoService: PhotoService
+    public photoService: PhotoService,
+    private transfer: FileTransfer
     ) {
 
     }
@@ -59,9 +72,130 @@ export class CurriculumPage implements OnInit {
 
  addPhotoToGallery() {
     this.photoService.addNewToGallery();
-    this.get_url();
+    this.s_i2();
   }
   image_user;
+
+  s_i2(){
+    this.imageForm = this.builder.group({
+      profile_pic: ['Eimar', [Validators.required]],
+      user_email: ['Stalin', [Validators.required]],
+     });
+
+     this.auth.subir_imagen(this.imageForm.value).subscribe(allowed => {
+      if (allowed == 1) {
+       // this.loading.dismiss();
+        return Observable.throw("Se ha guardado con éxito");
+        //this.nav.navigateForward('folder/Inbox');
+      } else {
+        //this.refresh.publishFormRefresh(2);
+       // this.loading.dismiss();
+        return Observable.throw("Error al guardar.");
+        //this.nav.pop();
+      }
+    },
+    error => {
+      //this.loading.dismiss();
+      console.log(error);
+      //this.presentToast(error.error);
+    });
+  }
+
+  s_i(){
+    console.log(this.photoService.url_photo);
+    const formData = new FormData();
+    //formData.append('user_email', this.loginUserForm.value.email);
+    formData.append('profile_pic', 'sas');
+    console.log(formData.get('profile_pic'));
+    
+    
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3');
+    /*headers = headers.append('Content-Type', 'multipart/form-data');
+    headers = headers.append('enctype', 'multipart/form-data');
+
+    /*let headers = new HttpHeaders({ 
+    //'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+    'Authorization' : 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3'
+    });*/
+    /*let headers = new HttpHeaders().set('Content-Type', 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
+    headers = headers.set('Authorization', 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3');*/
+
+    var url=`${environment.api}api/profile-picture/`;
+    
+    this.http.post(url, formData, {'headers':headers})
+        .toPromise()
+        .then(
+          data => {
+            console.log(data);
+          },
+          msg => {
+            console.log(msg);
+          });
+    
+  }
+
+  save_image(){
+    //https://trabajoenobra-test.herokuapp.com/api/profile-picture/
+    var datos={
+      profile_pic:'asd',
+      user_email:this.loginUserForm.value.email
+    }
+    this.imageForm = this.builder.group({
+      //profile_pic: ['Eimar', [Validators.required]],
+      user_email: ['Stalin', [Validators.required]],
+     });
+    console.log(datos);
+    var headers={
+      //'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+    };
+    this.http.post(`${environment.api}api/profile-picture/`, this.imageForm.value)
+        .toPromise()
+        .then(
+          data => {
+            console.log(data);
+          },
+          msg => {
+            console.log(msg);
+          });
+  }
+  public uploadImage() {
+    console.log('das');
+	  // Destination URL
+	  var url = `${environment.api}api/profile-picture/`;
+	 
+	  // File for Upload
+	  var targetPath = this.photoService.url_photo;
+	 
+	  // File name only
+	  var filename = 'chato';
+	 
+	  var options = {
+	    fileKey: "file",
+	    fileName: filename,
+	    chunkedMode: false,
+	    mimeType: "multipart/form-data",
+	    params : {'fileName': filename,
+                'profile_pic':this.photoService.url_photo_complete,
+                'user_email':this.loginUserForm.value.email
+                },
+	    headers : {
+           Connection: "close"
+        }
+	  };
+	 
+	  const fileTransfer: FileTransferObject = this.transfer.create();
+	 
+	  //this.presentLoading();
+	  // Use the FileTransfer to upload the image
+	  fileTransfer.upload(targetPath, url, options).then(data => {
+	   console.log(data);
+	  }, err => {
+	    console.log(err);
+	  });
+
+    console.log(fileTransfer);
+	}
 
   get_url(){
     console.log(this.photoService.photos[0]);

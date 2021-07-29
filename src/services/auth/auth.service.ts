@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { NavController, Platform, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
@@ -141,6 +141,26 @@ export class AuthService {
           //this.storage.setObject('USMASSGGRA', this.usuario.usuario);
           //observer.next(true);
           //observer.complete();
+        },
+        msg => {
+          observer.error(msg.error);
+          observer.complete();
+        });
+      });
+    }
+  }
+  public subir_imagen(credentials) {
+    if (credentials === null) {
+      return Observable.throw("Please insert credentials");
+    } else {
+      return Observable.create(observer => {
+        let headers = new HttpHeaders();
+        headers = headers.append('Authorization', 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3');
+        this.http.post(`${environment.api}api/profile-picture/`, credentials, {'headers':headers})
+        .toPromise()
+        .then(
+        data => {
+          console.log(data);
         },
         msg => {
           observer.error(msg.error);

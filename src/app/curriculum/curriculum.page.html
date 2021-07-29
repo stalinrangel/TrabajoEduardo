@@ -158,6 +158,24 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
+			
+			<ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Agregue sus acreditaciones</ion-label>
+				<ion-grid>
+					<ion-row *ngFor="let acreditaciones of acreditaciones">
+					  <ion-col>
+						<ion-input class="input-login" type="text" [(ngModel)]="p_r.nombre" placeholder="Nombre" ></ion-input>
+					  </ion-col>
+					  <ion-col>
+						<ion-input class="input-login" type="file" [(ngModel)]="p_r.file" placeholder="Nombre" ></ion-input>
+					  </ion-col>
+					  <ion-col *ngIf="acreditaciones.activo">
+						<ion-button class="ion-text-uppercase btn-init btn-global" (click)="add_acreditacion()">+</ion-button>
+					</ion-col>
+					</ion-row>
+				</ion-grid>
+			</ion-item>
+
 			<div class="content-btnlogin">
 				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
 				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="curriculo()">Guardar</ion-button>

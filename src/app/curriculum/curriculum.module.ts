@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 import { IonicModule } from '@ionic/angular';
 
 import { CurriculumPageRoutingModule } from './curriculum-routing.module';
 
 import { CurriculumPage } from './curriculum.page';
+import { File } from '@ionic-native/file';
+
+
 
 @NgModule({
   imports: [
@@ -14,7 +18,8 @@ import { CurriculumPage } from './curriculum.page';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    CurriculumPageRoutingModule
+    CurriculumPageRoutingModule,
+    
   ],
   declarations: [CurriculumPage]
 })
