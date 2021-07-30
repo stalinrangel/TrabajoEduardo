@@ -72,7 +72,7 @@ export class CurriculumPage implements OnInit {
 
  addPhotoToGallery() {
     this.photoService.addNewToGallery();
-    this.s_i2();
+    this.uploadImage();
   }
   image_user;
 
@@ -107,14 +107,14 @@ export class CurriculumPage implements OnInit {
     //formData.append('user_email', this.loginUserForm.value.email);
     formData.append('profile_pic', 'sas');
     console.log(formData.get('profile_pic'));
-    
-    
+
+
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3');
     /*headers = headers.append('Content-Type', 'multipart/form-data');
     headers = headers.append('enctype', 'multipart/form-data');
 
-    /*let headers = new HttpHeaders({ 
+    /*let headers = new HttpHeaders({
     //'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
     'Authorization' : 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3'
     });*/
@@ -122,7 +122,7 @@ export class CurriculumPage implements OnInit {
     headers = headers.set('Authorization', 'token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3');*/
 
     var url=`${environment.api}api/profile-picture/`;
-    
+
     this.http.post(url, formData, {'headers':headers})
         .toPromise()
         .then(
@@ -132,7 +132,7 @@ export class CurriculumPage implements OnInit {
           msg => {
             console.log(msg);
           });
-    
+
   }
 
   save_image(){
@@ -161,37 +161,45 @@ export class CurriculumPage implements OnInit {
   }
   public uploadImage() {
     console.log('das');
+    alert('das');
+    alert(this.photoService.url_photo);
 	  // Destination URL
 	  var url = `${environment.api}api/profile-picture/`;
-	 
+
 	  // File for Upload
 	  var targetPath = this.photoService.url_photo;
-	 
+
 	  // File name only
-	  var filename = 'chato';
-	 
+	  var filename = 'chato.jpg';
+
 	  var options = {
-	    fileKey: "file",
+	    fileKey: "profile_pic",
 	    fileName: filename,
 	    chunkedMode: false,
 	    mimeType: "multipart/form-data",
 	    params : {'fileName': filename,
-                'profile_pic':this.photoService.url_photo_complete,
+                'profile_pic':this.photoService.url_photo,
                 'user_email':this.loginUserForm.value.email
                 },
 	    headers : {
-           Connection: "close"
+           Connection: "close",
+           Authorization : "token aa9b23f3cb7ec4a3a52e00fbe6ee3aae49b94bb3",
+
+
         }
 	  };
-	 
+
 	  const fileTransfer: FileTransferObject = this.transfer.create();
-	 
+
 	  //this.presentLoading();
 	  // Use the FileTransfer to upload the image
 	  fileTransfer.upload(targetPath, url, options).then(data => {
 	   console.log(data);
+     alert('exito');
 	  }, err => {
 	    console.log(err);
+      alert('error4');
+      alert(JSON.stringify(err));
 	  });
 
     console.log(fileTransfer);

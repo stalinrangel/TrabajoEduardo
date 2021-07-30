@@ -25,6 +25,10 @@ const routes: Routes = [
   {
     path: 'curriculum',
     loadChildren: () => import('./curriculum/curriculum.module').then( m => m.CurriculumPageModule)
+  },
+  {
+    path: 'upload',
+    loadChildren: () => import('./upload/upload.module').then( m => m.UploadPageModule)
   }
 
 ];

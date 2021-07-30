@@ -25,7 +25,7 @@ export class AuthService {
           data => {
             this.usuario = data;
             console.log(data);
-            this.nav.navigateForward('curriculum');
+            this.nav.navigateForward('upload');
             /*this.storage.setObject('MASSGGRAPROV1',credentials);
             if(this.usuario.user.tipo_usuario == 3 || this.usuario.user.tipo_usuario == 4){
               this.storage.set('TKMASSGGRAPROV',this.usuario.token);
