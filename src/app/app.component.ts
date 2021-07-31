@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage-angular'; 
+import { Storage } from '@ionic/storage-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { StorageService } from '../services/storage/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -8,14 +10,11 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/register', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'Principal', url: '/principal', icon: 'home' },
+    { title: 'Curriculum', url: '/curriculum', icon: 'document' },
+    { title: 'Ofertas', url: '/ofertas', icon: 'briefcase' },
   ];
-
+  public imageForm: FormGroup;
   public email = 'Usuario';
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   constructor(private storage: Storage) {}
@@ -23,5 +22,6 @@ export class AppComponent {
     // If using a custom driver:
     // await this.storage.defineDriver(MyCustomDriver)
     await this.storage.create();
+
   }
 }

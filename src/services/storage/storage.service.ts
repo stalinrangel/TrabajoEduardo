@@ -39,7 +39,7 @@ export class StorageService {
         return this.storage.set(ITEMS_KEY, [item]);
       }
     });
-  }; 
+  };
 
   deleteRecent(id: number): Promise<Item> {
     return this.storage.get(ITEMS_KEY).then((items: Item[]) => {
@@ -55,9 +55,23 @@ export class StorageService {
       return this.storage.set(ITEMS_KEY, toKeep);
     });
   }
-  
+
   get(key): Promise<any> {
     return this.storage.get(key);
+  }
+  gett(key){
+    let returnValue;
+    let returnValue2;
+    returnValue2=  this.storage.get(key).then((val) => {
+      console.log(val);
+      if(val) {
+        returnValue = val;
+      } else {
+        returnValue = null;
+      }
+    return returnValue;
+    });
+    console.log(returnValue2);
   }
 
   set(key, value) {
@@ -75,11 +89,11 @@ export class StorageService {
     return returnValue;
     });
   }
-  
+
   setObject(key, value) {
     this.storage.set(key, JSON.stringify(value));
   }
-  
+
   remove(key) {
     this.storage.remove(key);
   }

@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
           //this.loginUserForm.patchValue({token_notificacion: ids.userId});
           this.auth.login(this.loginUserForm.value).subscribe(allowed => {
             if (allowed == 1) {
-              this.loading.dismiss();
+              //this.loading.dismiss();
               this.storage.set('email_trabajo',this.loginUserForm.value.email);
               //this.storage.set('nombre_trabajo',ids.userId);
               console.log('login');
@@ -68,12 +68,13 @@ export class LoginPage implements OnInit {
             } else {
               //this.refresh.publishFormRefresh(2);
               console.log('login2');
-              this.loading.dismiss();
+              //this.loading.dismiss();
               //this.nav.pop();
             }
           },
           error => {
-            this.loading.dismiss();
+            console.log(error);
+            //this.loading.dismiss();
             //this.presentToast(error.error);
           });
         //};

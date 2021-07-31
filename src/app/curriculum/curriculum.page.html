@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button style="color: white;"></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Curriculum</ion-title>
   </ion-toolbar>
@@ -10,15 +10,24 @@
 <ion-content>
 
     <div class="content-profile">
-      <div class="content-icon" (click)="addPhotoToGallery()">
+      <div class="content-icon" >
         <ion-grid>
           <ion-row>
             <ion-col></ion-col>
             <ion-col>
-              <ion-img style="border-radius: 90px; width: 180px;" [src]="photoService.url_photo == null ? 'assets/icon/profile-general.png' : photoService.url_photo" class="icon-person"></ion-img>
-              <ion-icon name="add-circle"></ion-icon>
+              <ion-img style="border-radius: 90px; width: 180px;" [src]="image_user == null ? 'assets/icon/profile-general.png' : image_user" class="icon-person">
+              </ion-img>
+              <!--ion-icon name="add-circle"></ion-icon-->
             </ion-col>
             <ion-col></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <input class="input-login" accept="image/*" type="file" ng2FileSelect [uploader]="fileUploader2"  />
+            </ion-col>
+            <ion-col>
+              <ion-button style="width: 80%;" class="ion-text-uppercase btn-init btn-global" (click)="uploadPhoto()">Guardar imagen</ion-button>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </div>
@@ -158,8 +167,8 @@
 					</ion-row>
 				</ion-grid>
 			</ion-item>
-			
-			<ion-item lines="none" class="item-input">
+
+			<!--ion-item lines="none" class="item-input">
 				<ion-label class="label-login" position="stacked">Agregue sus acreditaciones</ion-label>
 				<ion-grid>
 					<ion-row *ngFor="let acreditaciones of acreditaciones">
@@ -174,11 +183,36 @@
 					</ion-col>
 					</ion-row>
 				</ion-grid>
+			</ion-item-->
+
+      <ion-item lines="none" class="item-input">
+				<ion-label class="label-login" position="stacked">Agregue sus acreditaciones</ion-label>
+        <h2 style="color: white; font-size: 11px; ">Tus acreditaciones: {{ fileUploader?.queue?.length }}</h2>
+        <ul>
+          <li  *ngFor="let item of fileUploader.queue">
+            <p style="color: white; font-size: 11px;">{{ item?.file?.name }}</p>
+          </li>
+        </ul>
+				<ion-grid>
+					<ion-row>
+					  <ion-col>
+              <input class="input-login" type="file" ng2FileSelect [uploader]="fileUploader" multiple />
+					  </ion-col>
+					</ion-row>
+          <ion-row>
+					  <ion-col>
+              <ion-button class="ion-text-uppercase btn-init btn-global" (click)="uploadFiles()">Cargar archivos</ion-button>
+					  </ion-col>
+					</ion-row>
+				</ion-grid>
 			</ion-item>
 
+      <br>
+      <hr style="color: white;">
+      <br>
 			<div class="content-btnlogin">
 				<!--p (click)="resetPassword()">Recuperar contraseña</p-->
-				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="curriculo()">Guardar</ion-button>
+				<ion-button class="ion-text-uppercase btn-init btn-global" (click)="curriculo()">Guardar Curriculum</ion-button>
 			</div>
 			</ion-list>
 

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -22,7 +23,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     IonicStorageModule.forRoot(),
   ],
   providers: [
-    FileTransfer,
+    FileTransfer,FormBuilder,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

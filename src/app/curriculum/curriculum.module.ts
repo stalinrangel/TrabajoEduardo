@@ -10,7 +10,7 @@ import { CurriculumPageRoutingModule } from './curriculum-routing.module';
 import { CurriculumPage } from './curriculum.page';
 import { File } from '@ionic-native/file';
 
-
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
@@ -19,7 +19,8 @@ import { File } from '@ionic-native/file';
     ReactiveFormsModule,
     IonicModule,
     CurriculumPageRoutingModule,
-    
+    FileUploadModule
+
   ],
   declarations: [CurriculumPage]
 })

@@ -25,7 +25,12 @@ export class AuthService {
           data => {
             this.usuario = data;
             console.log(data);
-            this.nav.navigateForward('upload');
+            this.nav.navigateForward('principal');
+            let d:any;
+            d=data;
+            this.storage.set('TOEMAIL',credentials.email);
+            console.log(d.auth_token);
+            this.storage.set('TOTOKEN',d.auth_token);
             /*this.storage.setObject('MASSGGRAPROV1',credentials);
             if(this.usuario.user.tipo_usuario == 3 || this.usuario.user.tipo_usuario == 4){
               this.storage.set('TKMASSGGRAPROV',this.usuario.token);
@@ -107,14 +112,8 @@ export class AuthService {
         .then(
         data => {
           console.log(data);
-          //this.msgNewRegister(credentials.email, credentials.nombre);
-          //this.msgNewRegister('massage.graf.app@gmail.com', credentials.nombre);
-          //this.usuario = data;
-          //this.storage.setObject('MASSGGRAPROV1',credentials);
-          //this.storage.set('TKMASSGGRA',this.usuario.token);
-          //this.storage.setObject('USMASSGGRA', this.usuario.usuario);
-          //observer.next(true);
-          //observer.complete();
+          alert('Registro con exito, por favor inicia sesion con tus datos.');
+          this.nav.navigateForward('login');
         },
         msg => {
           observer.error(msg.error);

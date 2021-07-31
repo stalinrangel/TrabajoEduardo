@@ -24,7 +24,7 @@ export class UploadPage implements OnInit {
   }
   getFiles(): FileLikeObject[] {
     return this.fileUploader.queue.map((fileItem) => {
-      return fileItem.file;
+    return fileItem.file;
 
     });
   }

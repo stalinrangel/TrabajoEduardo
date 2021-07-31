@@ -9,6 +9,10 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PhotoService } from '../services/photo.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { UploadingService } from  '../uploading.service';
+import { FileUploader, FileLikeObject } from  'ng2-file-upload';
+import { concat } from  'rxjs';
+import { StorageService } from '../../services/storage/storage.service';
 
 
 @Component({
@@ -19,6 +23,12 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 export class CurriculumPage implements OnInit {
 
+  public fileUploader2: FileUploader = new FileUploader({});
+  public hasBaseDropZoneOver2: boolean = false;
+
+  public fileUploader: FileUploader = new FileUploader({});
+  public hasBaseDropZoneOver: boolean = false;
+
   public loginUserForm: FormGroup;
   public imageForm: FormGroup;
   private apiResponse;
@@ -27,6 +37,7 @@ export class CurriculumPage implements OnInit {
   public response;
   public loading;
   public labor_cat;
+  public email;
   public p_r=[
     {
     "person": "",
@@ -57,9 +68,10 @@ export class CurriculumPage implements OnInit {
     public nav: NavController,
     private toastController: ToastController,
     private auth: AuthService,
-    private storage: Storage,
     public photoService: PhotoService,
-    private transfer: FileTransfer
+    private transfer: FileTransfer,
+    private uploadingService: UploadingService,
+    public storage: StorageService
     ) {
 
     }
@@ -68,6 +80,7 @@ export class CurriculumPage implements OnInit {
  ngOnInit() {
    this.initForm();
    this.labor_categories();
+
  }
 
  addPhotoToGallery() {
@@ -248,29 +261,36 @@ export class CurriculumPage implements OnInit {
 }
 
  initForm() {
-   this.loginUserForm = this.builder.group({
-    first_name: ['Eimar', [Validators.required]],
-    second_name: ['Stalin', [Validators.required]],
-    first_lastname: ['Rangel', [Validators.required]],
-    second_lastname: ['Duran', [Validators.required]],
-    born: ['1989-08-14', [Validators.required]],
-    document_number: ['234234234', [Validators.required]],
-    phone_number: ['234234234', [Validators.required]],
-    experience_years: [2, [Validators.required]],
-    working: [false, [Validators.required]],
-    has_lodging: [true, [Validators.required]],
-    has_transport: [true, [Validators.required]],
-    has_tools: [true, [Validators.required]],
-    user: ["e.stalinrangel@gmail.com", [Validators.required]],
-    email: ["e.stalinrangel@gmail.com", [Validators.required]],
-    document_type: [1, [Validators.required]],
-    education: [1, [Validators.required]],
-    residence: [1, [Validators.required]],
-   // selec_categ: ['', [Validators.required]],
-    categories: [[{"category": 1, "grade":15}], [Validators.required]],
-    job_references: [[], [Validators.required]],
-    personal_references: [[], [Validators.required]],
-   });
+
+    this.loginUserForm = this.builder.group({
+      first_name: ['', [Validators.required]],
+      second_name: ['', [Validators.required]],
+      first_lastname: ['', [Validators.required]],
+      second_lastname: ['', [Validators.required]],
+      born: ['', [Validators.required]],
+      document_number: ['', [Validators.required]],
+      phone_number: ['', [Validators.required]],
+      experience_years: [, [Validators.required]],
+      working: [false, [Validators.required]],
+      has_lodging: [false, [Validators.required]],
+      has_transport: [false, [Validators.required]],
+      has_tools: [false, [Validators.required]],
+      user: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      document_type: [1, [Validators.required]],
+      education: [1, [Validators.required]],
+      residence: [1, [Validators.required]],
+    // selec_categ: ['', [Validators.required]],
+      categories: [[{"category": 1, "grade":15}], [Validators.required]],
+      job_references: [[], [Validators.required]],
+      personal_references: [[], [Validators.required]],
+    });
+    this.storage.get('TOEMAIL').then((val) => {
+      console.log(val);
+      this.loginUserForm.patchValue({user: val});
+      this.loginUserForm.patchValue({email: val});
+
+    });
   }
 
   labor_categories(){
@@ -304,7 +324,9 @@ export class CurriculumPage implements OnInit {
             this.auth.curriculum(this.loginUserForm.value).subscribe(allowed => {
               if (allowed == 1) {
                 this.loading.dismiss();
+                alert("Se ha guardado con éxito");
                 return Observable.throw("Se ha guardado con éxito");
+
                 //this.nav.navigateForward('folder/Inbox');
               } else {
                 //this.refresh.publishFormRefresh(2);
@@ -350,6 +372,84 @@ export class CurriculumPage implements OnInit {
         "person": "",
         "phone": "",
         "activo": 1
+      }
+    );
+  }
+
+  fileOverBase(event): void {
+    this.hasBaseDropZoneOver = event;
+  }
+  getFiles(): FileLikeObject[] {
+    return this.fileUploader.queue.map((fileItem) => {
+      return fileItem.file;
+
+    });
+  }
+  uploadFiles() {
+    console.log('upload');
+    let files = this.getFiles();
+    let requests = [];
+
+    files.forEach((file) => {
+      let formData = new FormData();
+      formData.append('file' , file.rawFile, file.name);
+      formData.append('user_email' , 'e.stalinrangel@gmail.com');
+      requests.push(this.uploadingService.uploadFormData_file(formData));
+      console.log('upload2');
+    });
+    console.log('upload3');
+    concat(...requests).subscribe(
+      (res) => {
+        let resp:any;
+        console.log(res);
+        resp=res;
+        alert(resp.message);
+        requests=[];
+      },
+      (err) => {
+        console.log(err);
+        alert(err.error.message);
+        requests=[];
+      }
+    );
+  }
+
+  fileOverBase2(event): void {
+    this.hasBaseDropZoneOver2 = event;
+  }
+  getFiles2(): FileLikeObject[] {
+    return this.fileUploader2.queue.map((fileItem) => {
+      return fileItem.file;
+
+    });
+
+  }
+  uploadPhoto() {
+    console.log('upload photo');
+    let files = this.getFiles2();
+    let requests = [];
+
+    files.forEach((file) => {
+      let formData = new FormData();
+      formData.append('profile_pic' , file.rawFile, file.name);
+      requests.push(this.uploadingService.uploadFormData(formData));
+
+    });
+
+    concat(...requests).subscribe(
+      (res) => {
+        let resp:any;
+        console.log(res);
+        resp=res;
+        //alert(resp.message);
+        alert('Error, intentelo nuevamente.');
+        this.image_user=resp.url;
+        requests=[];
+      },
+      (err) => {
+        console.log(err);
+        alert('Error, intentelo nuevamente.');
+        requests=[];
       }
     );
   }

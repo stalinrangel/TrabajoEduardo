@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <!--ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="addPhotoToGallery()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
@@ -25,5 +25,23 @@
         <ion-img [src]="photo.webviewPath"></ion-img>
       </ion-col>
     </ion-row>
+  </ion-grid-->
+
+  <ion-grid>
+    <ion-item lines="none" class="item-input">
+      <ion-label class="label-login" position="stacked">Ve y agrega tu Curriculum:</ion-label>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" class="ion-text-uppercase btn-init btn-global" (click)="curriculum()">Ir a Curriculum</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="block" class="ion-text-uppercase btn-init btn-global" (click)="uploadFiles()">Ofertas laborales</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
   </ion-grid>
 </ion-content>
